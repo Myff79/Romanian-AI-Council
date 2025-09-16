@@ -1,9 +1,9 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Romanian AI Council - Simple Version</title>
+    <title>Nordania AI Council - Digital Government Platform</title>
     <style>
         body { 
             background: #1a1a2e; 
@@ -103,6 +103,10 @@
         }
         .profile-img:hover .initials {
             opacity: 1;
+        }
+        .profile-img.no-image .initials {
+            opacity: 1;
+            background: transparent;
         }
         .member-info h3 {
             margin: 0;
@@ -401,7 +405,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🏛️ Romanian Future Council</h1>
+        <h1>🏛️ Nordania Future Council</h1>
         
         <div class="controls">
             <input type="text" id="issue" placeholder="Enter policy issue (e.g., 4-day work week for government employees?)" />
@@ -411,10 +415,10 @@
         <!-- Council Chairman -->
         <div class="chairman-section" id="chairman">
             <div class="chairman-avatar">
-                <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?w=150&h=150&fit=crop&crop=faces" alt="Mircea Codrescu" onerror="this.style.display='none'; this.nextElementSibling.style.opacity='1';">
-                <div class="initials">MC</div>
+                <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?w=150&h=150&fit=crop&crop=faces" alt="Marcus Nordberg" onerror="this.style.display='none'; this.nextElementSibling.style.opacity='1';">
+                <div class="initials">MN</div>
             </div>
-            <div class="chairman-name">Mircea Codrescu</div>
+            <div class="chairman-name">Marcus Nordberg</div>
             <div class="chairman-title">Council Chairman & Final Arbiter</div>
             <div class="chairman-status" id="chairmanStatus">
                 Ready to moderate council session...
@@ -452,46 +456,46 @@
     <script>
         const members = [
             {
-                name: "Elena Popescu", 
-                role: "EU Integration Specialist", 
-                initials: "EP", 
-                bio: "Former EU Commission advisor with Brussels experience",
+                name: "Elena Nordström", 
+                role: "International Integration Specialist", 
+                initials: "EN", 
+                bio: "Former international advisor with extensive diplomatic experience",
                 color: "#002B7F",
-                focus: "EU compliance and integration",
-                avatar: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=150&h=150&fit=crop&crop=faces"
+                focus: "International compliance and cooperation",
+                avatar: "https://images.unsplash.com/photo-1559386484-97dfc0e15539?w=150&h=150&fit=crop&crop=faces"
             },
             {
-                name: "Alex Ionescu", 
+                name: "Alex Teknos", 
                 role: "Digital Technology Expert", 
-                initials: "AI", 
-                bio: "Tech entrepreneur and MIT graduate",
+                initials: "AT", 
+                bio: "Tech entrepreneur and innovation strategist",
                 color: "#4A90E2",
                 focus: "Technology feasibility and digital innovation",
                 avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=faces"
             },
             {
-                name: "Maria Dumitrescu", 
+                name: "Maria Bergland", 
                 role: "Regional Development Advocate", 
-                initials: "MD", 
-                bio: "Rural development economist from Maramureș",
+                initials: "MB", 
+                bio: "Rural development economist from Northern Nordania",
                 color: "#8B4513",
                 focus: "Rural vs urban balance",
                 avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=faces"
             },
             {
-                name: "Radu Constantin", 
+                name: "Rune Økonomsen", 
                 role: "Economic Advisor", 
-                initials: "RC", 
-                bio: "Former McKinsey partner and National Bank advisor",
+                initials: "RØ", 
+                bio: "Former consulting partner and National Bank advisor",
                 color: "#FFD700",
                 focus: "Budget analysis and economic impact",
                 avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces"
             },
             {
-                name: "Ana Gheorghe", 
+                name: "Anna Folksson", 
                 role: "Citizen Voice Representative", 
-                initials: "AG", 
-                bio: "Civil society leader and former ombudsman",
+                initials: "AF", 
+                bio: "Civil society leader and democratic rights advocate",
                 color: "#E74C3C",
                 focus: "Public impact and accessibility",
                 avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=faces"
@@ -500,45 +504,65 @@
 
         // Chairman data
         const chairman = {
-            name: "Mircea Codrescu",
+            name: "Marcus Nordberg",
             title: "Council Chairman & Final Arbiter",
-            initials: "MC",
+            initials: "MN",
             avatar: "https://images.unsplash.com/photo-1556157382-97eda2d62296?w=150&h=150&fit=crop&crop=faces"
         };
 
         let sessionData = {};
         let transcriptEntries = [];
 
-        // Cross-discussion scenarios
+        // Enhanced cross-discussion scenarios with real debates
         const discussionScenarios = [
             {
-                from: "EP", to: "AI", 
-                message: "Alex, your tech focus is great, but we must ensure EU data compliance..."
+                from: "EN", to: "AT", 
+                message: "Alex, I appreciate your innovation enthusiasm, but rushing into digital solutions without proper international frameworks could create serious compliance issues. We've seen this happen in three other countries just last year.",
+                response: "Elena, with respect, waiting for perfect international consensus means we'll be using 2019 technology in 2030. Sometimes leadership means moving first and setting the standard others follow."
             },
             {
-                from: "AI", to: "MD", 
-                message: "Maria, digital infrastructure can actually help rural areas - let me explain..."
+                from: "AT", to: "MB", 
+                message: "Maria, I understand your rural concerns, but fiber optic networks could actually solve the isolation problem. Rural areas could access the same opportunities as the capital through digital connectivity.",
+                response: "Alex, you tech people always say that, but who's maintaining those networks when they break? We can't even get reliable electricity in some villages. Digital divide doesn't disappear with good intentions."
             },
             {
-                from: "MD", to: "RC", 
-                message: "Radu, the budget numbers look good, but what about rural implementation costs?"
+                from: "MB", to: "RØ", 
+                message: "Rune, your cost-benefit analysis looks impressive on paper, but it completely ignores implementation reality. Rural costs are always 3x higher than urban estimates. Where's the extra budget for that?",
+                response: "Maria, I've built buffer factors into the model. Yes, rural costs more, but the long-term economic returns from regional development far outweigh initial investment. We can't keep subsidizing inefficiency."
             },
             {
-                from: "RC", to: "AG", 
-                message: "Ana, citizen benefits are clear, but we need sustainable financing..."
+                from: "RØ", to: "AF", 
+                message: "Anna, while citizen consultation sounds democratic, endless public debates paralyze decision-making. Sometimes government needs to lead, not follow polls. Citizens don't always know what's best long-term.",
+                response: "Rune, that's exactly the elitist thinking that undermines democracy! Citizens live with these decisions daily. Their 'ignorance' is often wisdom about practical reality that consultants miss from their spreadsheets."
             },
             {
-                from: "AG", to: "EP", 
-                message: "Elena, EU requirements are fine, but citizens need to understand them..."
+                from: "AF", to: "EN", 
+                message: "Elena, international standards are important, but they're often written by bureaucrats who've never lived through policy implementation. We need solutions that work for real people, not just compliance checklists.",
+                response: "Anna, I've spent 15 years in international cooperation. Those 'bureaucrats' prevent the disasters I've seen when countries ignore proven frameworks. Some standards exist because people suffered without them."
+            },
+            {
+                from: "AT", to: "RØ", 
+                message: "Rune, your economic models assume perfect implementation, but technology projects fail 60% of the time due to human factors you're not accounting for. How do we build those risks into the budget?",
+                response: "Alex, that's why we phase implementation and require proof-of-concept validation. Failed projects usually ignore basic financial discipline, which is exactly what I'm trying to prevent here."
+            },
+            {
+                from: "MB", to: "EN", 
+                message: "Elena, international cooperation sounds nice, but it often means imposing urban solutions on rural problems. How do we ensure international frameworks actually serve rural communities?",
+                response: "Maria, good international frameworks specifically address regional disparities. The challenge is national governments who implement them poorly, not the frameworks themselves."
+            },
+            {
+                from: "AF", to: "AT", 
+                message: "Alex, every tech solution creates winners and losers. Who gets left behind in your digital transformation, and what's your plan for them? Technology isn't neutral.",
+                response: "Anna, digital exclusion is real, but the solution is digital inclusion programs, not avoiding digital progress. We can build equity into the system from the start."
             }
         ];
 
         // Chairman responses
         const chairmanResponses = {
             opening: "📋 Session opened. Council members, please present your initial analysis.",
-            discussion: "🗣️ Facilitating cross-member discussion and debate...",
-            synthesis: "⚖️ Analyzing member positions and seeking consensus...",
-            decision: "✅ Final decision reached based on expert deliberation."
+            discussion: "🗣️ I can see strong disagreements emerging. Let's work through these tensions constructively...",
+            synthesis: "⚖️ After hearing these robust debates, I'm weighing all perspectives to find a balanced path forward...",
+            decision: "✅ Despite significant disagreements, we've reached a decision that acknowledges the valid concerns raised."
         };
 
         // Initialize the council grid
@@ -554,7 +578,7 @@
                 card.innerHTML = `
                     <div class="member-header">
                         <div class="profile-img" style="background: ${member.color};">
-                            <img src="${member.avatar}" alt="${member.name}" onerror="this.style.display='none'; this.nextElementSibling.style.opacity='1';">
+                            <img src="${member.avatar}" alt="${member.name}" onerror="this.style.display='none'; this.parentElement.classList.add('no-image');">
                             <div class="initials">${member.initials}</div>
                         </div>
                         <div class="member-info">
@@ -579,31 +603,31 @@
         // Simple response generation
         function generateResponse(member, issue) {
             const responses = {
-                "EP": {
-                    positions: ["EU compliant", "Requires Brussels review", "Supports integration"],
+                "EN": {
+                    positions: ["Internationally compliant", "Requires coordination review", "Supports cooperation"],
                     analyses: [
-                        "This aligns with European standards and integration goals.",
-                        "We need to ensure compliance with EU directives.",
-                        "Brussels coordination will be essential for success."
+                        "This aligns with international standards and cooperation goals.",
+                        "We need to ensure compliance with international agreements.",
+                        "International coordination will be essential for success."
                     ]
                 },
-                "AI": {
+                "AT": {
                     positions: ["Digitally progressive", "Needs tech upgrade", "Innovation opportunity"],
                     analyses: [
                         "Strong digital component with scalable infrastructure.",
                         "Requires modern technology stack and proper implementation.",
-                        "Could position Romania as a digital leader in the region."
+                        "Could position Nordania as a digital leader in the region."
                     ]
                 },
-                "MD": {
+                "MB": {
                     positions: ["Regionally balanced", "Rural-first approach", "Equity concerns"],
                     analyses: [
                         "Must ensure equal benefits for rural and urban areas.",
-                        "Bucharest-centric policies often leave villages behind.",
+                        "Capital-centric policies often leave rural areas behind.",
                         "Need decentralized implementation and local engagement."
                     ]
                 },
-                "RC": {
+                "RØ": {
                     positions: ["Economically viable", "Budget concerns", "ROI positive"],
                     analyses: [
                         "Numbers look good with sustainable financing model.",
@@ -611,7 +635,7 @@
                         "Strong economic fundamentals with competitive advantages."
                     ]
                 },
-                "AG": {
+                "AF": {
                     positions: ["Public support", "Needs consultation", "Accessibility focus"],
                     analyses: [
                         "Citizens will benefit with proper communication.",
@@ -682,45 +706,67 @@
             transcriptEntries = [];
         }
 
-        // Visual discussion animation
-        async function showDiscussion(from, to, message) {
+        // Enhanced visual discussion animation with responses
+        async function showDiscussion(discussionData) {
+            const { from, to, message, response } = discussionData;
             const fromCard = document.getElementById(`card-${from}`);
             const toCard = document.getElementById(`card-${to}`);
-            const discussionBubble = document.getElementById(`discussion-${from}`);
-            const discussionText = document.getElementById(`discussionText-${from}`);
+            const fromBubble = document.getElementById(`discussion-${from}`);
+            const fromText = document.getElementById(`discussionText-${from}`);
+            const toBubble = document.getElementById(`discussion-${to}`);
+            const toText = document.getElementById(`discussionText-${to}`);
             
-            // Animate discussion line
+            const fromMember = members.find(m => m.initials === from);
+            const toMember = members.find(m => m.initials === to);
+            
+            // Part 1: Initial statement
             const discussionLine = document.getElementById('discussionLine');
             discussionLine.style.animation = 'none';
             setTimeout(() => {
                 discussionLine.style.animation = 'flowDiscussion 2s ease-in-out';
             }, 10);
             
-            // Highlight cards
             fromCard.classList.add('discussing');
             toCard.classList.add('responding');
             
-            // Show discussion bubble
-            discussionText.textContent = message;
-            discussionBubble.classList.add('show');
+            fromText.textContent = message;
+            fromBubble.classList.add('show');
             
-            // Add to transcript
-            const fromMember = members.find(m => m.initials === from);
-            const toMember = members.find(m => m.initials === to);
-            if (fromMember) {
-                addTranscriptEntry(
-                    `${fromMember.name} → ${toMember.name}`, 
-                    message, 
-                    fromMember.avatar
-                );
-            }
+            addTranscriptEntry(
+                `${fromMember.name} → ${toMember.name}`, 
+                message, 
+                fromMember.avatar
+            );
             
-            await new Promise(resolve => setTimeout(resolve, 3500)); // Longer duration to read
+            await new Promise(resolve => setTimeout(resolve, 4500)); // Time to read initial message
+            
+            // Part 2: Response/Counter-argument
+            fromBubble.classList.remove('show');
+            fromCard.classList.remove('discussing');
+            
+            // Animate response line in opposite direction
+            setTimeout(() => {
+                discussionLine.style.animation = 'flowDiscussion 2s ease-in-out reverse';
+            }, 200);
+            
+            toCard.classList.add('discussing');
+            fromCard.classList.add('responding');
+            
+            toText.textContent = response;
+            toBubble.classList.add('show');
+            
+            addTranscriptEntry(
+                `${toMember.name} → ${fromMember.name}`, 
+                response, 
+                toMember.avatar
+            );
+            
+            await new Promise(resolve => setTimeout(resolve, 4500)); // Time to read response
             
             // Clean up
-            fromCard.classList.remove('discussing');
-            toCard.classList.remove('responding');
-            discussionBubble.classList.remove('show');
+            toCard.classList.remove('discussing');
+            fromCard.classList.remove('responding');
+            toBubble.classList.remove('show');
         }
 
         // Update chairman status
@@ -817,18 +863,23 @@
             updateChairmanStatus('discussion');
             addTranscriptEntry(
                 chairman.name,
-                "Now I invite you to engage with each other's perspectives. Let's hear your cross-analyses.",
+                "Now I invite you to challenge each other's perspectives. I want to hear the real disagreements and tensions here - don't hold back.",
                 chairman.avatar,
                 'chairman'
             );
             await new Promise(resolve => setTimeout(resolve, 1500));
 
-            // Show 3 random discussions
+            // Show 4-5 discussion exchanges (more realistic debate)
             const shuffledDiscussions = [...discussionScenarios].sort(() => 0.5 - Math.random());
-            for (let i = 0; i < 3; i++) {
+            const numDiscussions = Math.floor(Math.random() * 2) + 4; // 4-5 discussions
+            
+            for (let i = 0; i < Math.min(numDiscussions, shuffledDiscussions.length); i++) {
                 const discussion = shuffledDiscussions[i];
-                await showDiscussion(discussion.from, discussion.to, discussion.message);
+                await showDiscussion(discussion);
                 sessionData.discussions.push(discussion);
+                
+                // Small pause between discussions
+                await new Promise(resolve => setTimeout(resolve, 1000));
             }
 
             // Phase 4: Chairman synthesis
@@ -836,7 +887,7 @@
             updateChairmanStatus('synthesis');
             addTranscriptEntry(
                 chairman.name,
-                "Thank you all. I am now synthesizing your expert perspectives to reach a balanced decision.",
+                "Thank you all. That was intense but necessary. I've heard passionate arguments from all sides, and now I must weigh these competing priorities to reach a decision that serves the greater good.",
                 chairman.avatar,
                 'chairman'
             );
@@ -903,7 +954,7 @@
             const dataStr = JSON.stringify(sessionData, null, 2);
             const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
             
-            const exportFileDefaultName = `romanian_council_${new Date().toISOString().slice(0,10)}.json`;
+            const exportFileDefaultName = `nordania_council_${new Date().toISOString().slice(0,10)}.json`;
             
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);
