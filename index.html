@@ -1,1677 +1,909 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Romanian Future Council - Digital Government Platform</title>
+    <title>Romanian AI Council - Simple Version</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        * {
+        body { 
+            background: #1a1a2e; 
+            color: white; 
+            font-family: Arial, sans-serif; 
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            padding: 20px;
         }
-
-        :root {
-            --romanian-blue: #002B7F;
-            --romanian-yellow: #FFD700;
-            --romanian-red: #CE1126;
-            --dark-blue: #001633;
-            --navy: #0A1428;
-            --gold: #FFD700;
-            --light-blue: #E6F2FF;
-            --text-primary: #FFFFFF;
-            --text-secondary: #B8C5D1;
-            --card-bg: rgba(255, 255, 255, 0.08);
-            --card-border: rgba(255, 255, 255, 0.12);
-            --shadow-light: rgba(255, 215, 0, 0.1);
-            --gradient-bg: linear-gradient(135deg, var(--dark-blue) 0%, var(--navy) 50%, #1a1a2e 100%);
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
         }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--gradient-bg);
-            color: var(--text-primary);
-            min-height: 100vh;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Header */
-        .header {
+        h1 {
             text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
+            color: #FFD700;
+            margin-bottom: 30px;
         }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--romanian-blue), var(--romanian-yellow), var(--romanian-red));
-            border-radius: 2px;
-        }
-
-        .header h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--text-primary), var(--romanian-yellow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            margin: 2rem 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            height: 8px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--romanian-blue), var(--romanian-yellow));
-            width: 0%;
-            transition: width 1s ease-in-out;
-            border-radius: 10px;
-        }
-
-        /* Input Section */
-        .input-section {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .input-section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(255, 215, 0, 0.1);
-        }
-
-        .issue-input {
-            width: 100%;
-            padding: 1.5rem;
-            font-size: 1.1rem;
-            border: 2px solid var(--card-border);
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .issue-input:focus {
-            outline: none;
-            border-color: var(--romanian-yellow);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .issue-input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .controls-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .control-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .control-group label {
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-        }
-
-        .control-group select,
-        .control-group input[type="number"] {
-            padding: 0.75rem;
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        .control-group select:focus,
-        .control-group input[type="number"]:focus {
-            outline: none;
-            border-color: var(--romanian-yellow);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
-        }
-
-        /* Role Weights */
-        .role-weights {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .weight-control {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .weight-control:hover {
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .weight-control label {
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
+        .controls { 
+            margin-bottom: 30px; 
             text-align: center;
         }
-
-        .weight-control input[type="range"] {
-            width: 100%;
-            margin: 0.5rem 0;
-            -webkit-appearance: none;
-            appearance: none;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(255, 255, 255, 0.2);
-            outline: none;
-        }
-
-        .weight-control input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--romanian-yellow);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .weight-control input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-        }
-
-        .weight-value {
-            font-size: 0.8rem;
-            color: var(--romanian-yellow);
-            font-weight: 600;
-        }
-
-        /* Action Buttons */
-        .action-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--romanian-blue), var(--romanian-red));
+        #issue {
+            width: 400px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #3498db;
+            background: #16213e;
             color: white;
-            box-shadow: 0 4px 15px rgba(0, 43, 127, 0.3);
+            margin-right: 10px;
         }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 43, 127, 0.4);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-            border: 1px solid var(--card-border);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        /* Results Section */
-        .results {
-            margin-top: 3rem;
-        }
-
-        .round {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(20px);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
-        }
-
-        .round.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .round h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            background: linear-gradient(135deg, var(--text-primary), var(--romanian-yellow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Role Cards Grid */
-        .roles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .role-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .role-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--romanian-blue), var(--romanian-yellow), var(--romanian-red));
-        }
-
-        .role-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            border-color: var(--romanian-yellow);
-        }
-
-        .role-card.thinking {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
-            50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.4); }
-        }
-
-        .role-header {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
+        #runBtn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        }
+        #runBtn:hover {
+            background: #2980b9;
+        }
+        .council-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
+            margin-bottom: 30px;
+        }
+        .member-card { 
+            background: #16213e; 
+            padding: 20px; 
+            border-radius: 10px; 
+            border: 2px solid transparent;
             transition: all 0.3s ease;
         }
-
-        .role-header:hover {
-            background: rgba(255, 255, 255, 0.08);
+        .member-card.thinking {
+            border-color: #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
-
-        .role-info {
+        .member-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            margin-bottom: 15px;
         }
-
-        .role-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--romanian-yellow);
-            border-radius: 12px;
+        .profile-img { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            background: #3498db; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 18px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .profile-img .initials {
+            position: absolute;
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--romanian-blue);
-        }
-
-        .role-name {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--text-primary);
-        }
-
-        .role-title {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-top: 0.2rem;
-        }
-
-        .role-weight {
-            font-size: 0.85rem;
-            color: var(--romanian-yellow);
-            font-weight: 600;
-        }
-
-        .role-content {
-            padding: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-
-        .role-content.expanded {
-            padding: 1.5rem;
-            max-height: 800px;
-        }
-
-        .recommendation {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            border-left: 3px solid var(--romanian-yellow);
-        }
-
-        .recommendation h4 {
-            color: var(--romanian-yellow);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .recommendation p {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: var(--text-secondary);
-        }
-
-        /* Decision Section */
-        .decision-section {
-            background: linear-gradient(135deg, rgba(0, 43, 127, 0.3), rgba(206, 17, 38, 0.2));
-            border: 2px solid var(--romanian-yellow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .decision-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .decision-result {
-            text-align: center;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .decision-outcome {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .approve { color: #4CAF50; }
-        .reject { color: #f44336; }
-        .conditional { color: var(--romanian-yellow); }
-
-        /* Appeal Section */
-        .appeal-section {
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 193, 7, 0.2));
-            border: 2px solid var(--romanian-yellow);
-        }
-
-        .appeal-result {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .appeal-outcome {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .uphold { color: #4CAF50; }
-        .remand { color: #f44336; }
-
-        /* Constitution */
-        .constitution {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            margin-top: 3rem;
-            backdrop-filter: blur(20px);
-        }
-
-        .constitution-header {
-            padding: 2rem;
-            cursor: pointer;
-            border-bottom: 1px solid var(--card-border);
-            transition: all 0.3s ease;
-        }
-
-        .constitution-header:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .constitution-header h2 {
-            font-size: 1.8rem;
-            color: var(--text-primary);
-        }
-
-        .constitution-content {
-            padding: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-
-        .constitution-content.expanded {
-            padding: 2rem;
-            max-height: 1000px;
-        }
-
-        .constitution-content h3 {
-            color: var(--romanian-yellow);
-            margin-bottom: 1rem;
-            margin-top: 2rem;
-        }
-
-        .constitution-content h3:first-child {
-            margin-top: 0;
-        }
-
-        .constitution-content ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .constitution-content li {
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-        }
-
-        /* Loading Animation */
-        .loading {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-secondary);
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            border: 3px solid var(--card-border);
-            border-top: 3px solid var(--romanian-yellow);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Discussion Flow Animation */
-        .discussion-flow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 2px;
-            height: 40px;
-            background: linear-gradient(90deg, var(--romanian-blue), var(--romanian-yellow));
-            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 16px;
             opacity: 0;
-            animation: flow 2s ease-in-out infinite;
+            transition: opacity 0.3s ease;
         }
-
-        @keyframes flow {
-            0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .profile-img:hover .initials {
+            opacity: 1;
         }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .controls-grid,
-            .role-weights {
-                grid-template-columns: 1fr;
-            }
-            
-            .roles-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-                max-width: 300px;
-            }
+        .member-info h3 {
+            margin: 0;
+            color: #FFD700;
         }
-
-        .hidden {
+        .member-info .role {
+            color: #bbb;
+            font-size: 14px;
+        }
+        .member-info .bio {
+            color: #ccc;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .response {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
             display: none;
         }
-
-        /* Role Avatar and Bio Styles */
-        .role-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            border: 2px solid var(--card-border);
-            margin-right: 0;
+        .response.show {
+            display: block;
         }
-
-        .role-bio {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-top: 0.3rem;
-            line-height: 1.4;
-            max-width: 280px;
+        #decision { 
+            margin-top: 30px; 
+            padding: 20px;
+            background: #16213e;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
         }
-
-        /* Sample Issues Buttons */
-        .sample-issues {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
+        #decision.show {
+            display: block;
         }
-
-        .sample-issue-btn {
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-secondary);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
+        .decision-outcome {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .approve { color: #4CAF50; }
+        .reject { color: #f44336; }
+        .conditional { color: #FFD700; }
+        #exportBtn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            display: none;
+        }
+        #exportBtn.show {
+            display: inline-block;
+        }
+        .loading {
+            text-align: center;
+            color: #FFD700;
+            font-style: italic;
+        }
+        
+        /* Council Chairman */
+        .chairman-section {
+            background: linear-gradient(135deg, #002B7F, #1a1a2e);
+            border: 2px solid #FFD700;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+            display: none;
+        }
+        .chairman-section.show {
+            display: block;
+        }
+        .chairman-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 28px;
+            margin: 0 auto 15px;
+            border: 3px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+        }
+        .chairman-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .chairman-avatar .initials {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.7);
+            color: #FFD700;
+            font-size: 24px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .chairman-avatar:hover .initials {
+            opacity: 1;
+        }
+        .chairman-name {
+            font-size: 24px;
+            color: #FFD700;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .chairman-title {
+            color: #ccc;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .chairman-status {
+            padding: 10px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #FFD700;
+            margin-top: 15px;
         }
 
-        .sample-issue-btn:hover {
+        /* Discussion Flow Animations */
+        .discussion-container {
+            position: relative;
+            margin: 20px 0;
+        }
+        .discussion-line {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+            top: 50%;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            animation: flowDiscussion 2s ease-in-out;
+        }
+        @keyframes flowDiscussion {
+            0% { opacity: 0; transform: translateX(-100%); }
+            50% { opacity: 1; transform: translateX(0%); }
+            100% { opacity: 0; transform: translateX(100%); }
+        }
+
+        /* Cross-discussion highlights */
+        .member-card.discussing {
+            border-color: #27ae60;
+            box-shadow: 0 0 15px rgba(39, 174, 96, 0.4);
+        }
+        .member-card.responding {
+            border-color: #e67e22;
+            box-shadow: 0 0 15px rgba(230, 126, 34, 0.4);
+        }
+
+        /* Discussion bubbles */
+        .discussion-bubble {
+            background: rgba(39, 174, 96, 0.1);
+            border: 1px solid #27ae60;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+            font-style: italic;
+            display: none;
+        }
+        .discussion-bubble.show {
+            display: block;
+            animation: fadeInBubble 0.5s ease-in;
+        }
+        @keyframes fadeInBubble {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Discussion Transcript */
+        .transcript-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin: 30px 0;
+            padding: 20px;
+            display: none;
+        }
+        .transcript-section.show {
+            display: block;
+            animation: fadeInSection 0.5s ease-in;
+        }
+        @keyframes fadeInSection {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .transcript-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+            padding: 10px;
             background: rgba(255, 215, 0, 0.1);
-            color: var(--romanian-yellow);
-            border-color: var(--romanian-yellow);
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .transcript-header:hover {
+            background: rgba(255, 215, 0, 0.15);
+        }
+        .transcript-title {
+            color: #FFD700;
+            font-size: 18px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .transcript-toggle {
+            margin-left: auto;
+            color: #FFD700;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+        .transcript-toggle.expanded {
+            transform: rotate(180deg);
+        }
+        .transcript-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .transcript-content.expanded {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .transcript-entry {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border-left: 3px solid #27ae60;
+            animation: slideInTranscript 0.5s ease-out;
+        }
+        @keyframes slideInTranscript {
+            0% { opacity: 0; transform: translateX(-20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .transcript-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin-right: 12px;
+            flex-shrink: 0;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .transcript-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .transcript-message {
+            flex: 1;
+        }
+        .transcript-speaker {
+            font-weight: bold;
+            color: #FFD700;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+        .transcript-text {
+            color: #E0E6ED;
+            font-size: 14px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+        .transcript-phase {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #FFD700;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 20px 0 10px 0;
+            text-align: center;
+        }
+        .transcript-phase-title {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <h1>🏛️ Romanian Future Council</h1>
-            <p>Advanced Policy Deliberation Platform for Romania's Digital Government</p>
-        </header>
-
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
+        <h1>🏛️ Romanian Future Council</h1>
+        
+        <div class="controls">
+            <input type="text" id="issue" placeholder="Enter policy issue (e.g., 4-day work week for government employees?)" />
+            <button id="runBtn" onclick="runCouncil()">Run Council</button>
         </div>
 
-        <section class="input-section">
-            <textarea 
-                class="issue-input" 
-                id="issueInput" 
-                placeholder="Enter a policy issue for deliberation (e.g., 'Implement digital nomad visa program for EU citizens with €50M budget and 2-year pilot timeline?')"
-                rows="4"
-            ></textarea>
-
-            <div class="sample-issues">
-                <button class="sample-issue-btn" onclick="fillSampleIssue('Establish high-speed rail connection between Bucharest and Cluj with €8B EU funding over 10 years?')">🚄 High-Speed Rail</button>
-                <button class="sample-issue-btn" onclick="fillSampleIssue('Create national AI strategy with €500M budget and regulatory framework for public sector adoption?')">🤖 AI Strategy</button>
-                <button class="sample-issue-btn" onclick="fillSampleIssue('Launch universal basic income pilot in rural areas with €200M budget for 50,000 participants?')">💰 UBI Pilot</button>
-                <button class="sample-issue-btn" onclick="fillSampleIssue('Mandate Romanian language requirements in all public services while ensuring accessibility for minorities?')">🗣️ Language Policy</button>
-                <button class="sample-issue-btn" onclick="fillSampleIssue('Implement digital nomad visa program for EU citizens with streamlined tax framework?')">💻 Digital Nomads</button>
+        <!-- Council Chairman -->
+        <div class="chairman-section" id="chairman">
+            <div class="chairman-avatar">
+                <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?w=150&h=150&fit=crop&crop=faces" alt="Mircea Codrescu" onerror="this.style.display='none'; this.nextElementSibling.style.opacity='1';">
+                <div class="initials">MC</div>
             </div>
-
-            <div class="controls-grid">
-                <div class="control-group">
-                    <label for="protocol">Decision Protocol</label>
-                    <select id="protocol">
-                        <option value="best-argument">Best Argument</option>
-                        <option value="majority">Majority Vote</option>
-                        <option value="pareto-safe">Pareto Safe</option>
-                    </select>
-                </div>
-
-                <div class="control-group">
-                    <label for="riskTolerance">Risk Tolerance</label>
-                    <select id="riskTolerance">
-                        <option value="low">Low</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="high">High</option>
-                    </select>
-                </div>
-
-                <div class="control-group">
-                    <label for="budgetCap">Budget Cap (€)</label>
-                    <input type="number" id="budgetCap" value="1000000" min="0" step="100000">
-                </div>
-            </div>
-
-            <div class="role-weights">
-                <div class="weight-control">
-                    <label for="euWeight">EU Integration Specialist</label>
-                    <input type="range" id="euWeight" min="0" max="2" step="0.1" value="1.0">
-                    <span class="weight-value" id="euValue">1.0x</span>
-                </div>
-                <div class="weight-control">
-                    <label for="digitalWeight">Digital Transformation</label>
-                    <input type="range" id="digitalWeight" min="0" max="2" step="0.1" value="1.0">
-                    <span class="weight-value" id="digitalValue">1.0x</span>
-                </div>
-                <div class="weight-control">
-                    <label for="regionalWeight">Regional Development</label>
-                    <input type="range" id="regionalWeight" min="0" max="2" step="0.1" value="1.0">
-                    <span class="weight-value" id="regionalValue">1.0x</span>
-                </div>
-                <div class="weight-control">
-                    <label for="economicWeight">Economic Modernization</label>
-                    <input type="range" id="economicWeight" min="0" max="2" step="0.1" value="1.0">
-                    <span class="weight-value" id="economicValue">1.0x</span>
-                </div>
-                <div class="weight-control">
-                    <label for="citizenWeight">Citizen Voice</label>
-                    <input type="range" id="citizenWeight" min="0" max="2" step="0.1" value="1.0">
-                    <span class="weight-value" id="citizenValue">1.0x</span>
-                </div>
-            </div>
-
-            <div class="action-buttons">
-                <button class="btn btn-primary" id="runCouncilBtn">🚀 Run Council</button>
-                <button class="btn btn-secondary" id="exportBtn" style="display: none;">📊 Export Log</button>
-                <button class="btn btn-secondary" id="copyDemoBtn">🔗 Copy Demo Link</button>
-            </div>
-        </section>
-
-        <div id="results" class="results hidden">
-            <div id="loading" class="loading">
-                <div class="loading-spinner"></div>
-                <p>Romanian Future Council is deliberating...</p>
-            </div>
-
-            <!-- Judge Minerva - Observing -->
-            <div id="judgeObserving" class="round hidden" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.4), rgba(0, 0, 0, 0.3)); border: 2px solid #FFD700;">
-                <div id="judgeObservingContent"></div>
-            </div>
-
-            <div id="round1" class="round hidden">
-                <h2>Round 1: Initial Expert Analysis</h2>
-                <div id="round1Roles" class="roles-grid"></div>
-            </div>
-
-            <div id="round2" class="round hidden">
-                <h2>Round 2: Cross-Perspective Critique</h2>
-                <div id="round2Roles" class="roles-grid"></div>
-            </div>
-
-            <div id="decision" class="round decision-section hidden">
-                <h2>Sovereign Decision</h2>
-                <div id="decisionContent"></div>
-            </div>
-
-            <div id="appeal" class="round appeal-section hidden">
-                <h2>Constitutional Review</h2>
-                <div id="appealContent"></div>
-            </div>
-
-            <!-- Judge Minerva - Final Ruling -->
-            <div id="judgeFinal" class="round hidden" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.6), rgba(0, 0, 0, 0.4)); border: 3px solid #FFD700; box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);">
-                <h2 style="color: #FFD700;">⚖️ Judge Minerva - Final Constitutional Ruling</h2>
-                <div id="judgeFinalContent"></div>
+            <div class="chairman-name">Mircea Codrescu</div>
+            <div class="chairman-title">Council Chairman & Final Arbiter</div>
+            <div class="chairman-status" id="chairmanStatus">
+                Ready to moderate council session...
             </div>
         </div>
+        
+        <div class="discussion-container" id="discussionFlow">
+            <div class="discussion-line" id="discussionLine"></div>
+        </div>
+        
+        <div class="council-grid" id="council">
+            <!-- Council members will be populated here -->
+        </div>
 
-        <section class="constitution">
-            <div class="constitution-header" onclick="toggleConstitution()">
-                <h2>📜 Romanian Digital Governance Constitution</h2>
+        <!-- Discussion Transcript -->
+        <div class="transcript-section" id="transcript">
+            <div class="transcript-header" onclick="toggleTranscript()">
+                <span>📝</span>
+                <span class="transcript-title">Council Discussion Transcript</span>
+                <span class="transcript-toggle" id="transcriptToggle">▼</span>
             </div>
-            <div class="constitution-content" id="constitutionContent">
-                <h3>Preamble</h3>
-                <p>We, the Romanian people, establish this framework to ensure AI-assisted governance serves European values, democratic principles, and Romania's path to full digital transformation while preserving our national identity and regional balance.</p>
-                
-                <h3>Core Principles</h3>
-                <ul>
-                    <li><strong>EU Alignment:</strong> All decisions must comply with European Union directives and support Romania's integration goals</li>
-                    <li><strong>Digital Transformation:</strong> Technology adoption must bridge divides and create inclusive digital infrastructure</li>
-                    <li><strong>Regional Balance:</strong> Policies must consider impact on rural areas and reduce Bucharest-provincial inequalities</li>
-                    <li><strong>Economic Competitiveness:</strong> Decisions should enhance Romania's position in global markets while maintaining fiscal responsibility</li>
-                    <li><strong>Citizen Participation:</strong> All voices must be heard, with special attention to vulnerable populations</li>
-                    <li><strong>Transparency:</strong> All deliberations must be open, explainable, and subject to democratic oversight</li>
-                </ul>
-
-                <h3>Implementation Guardrails</h3>
-                <ul>
-                    <li>No policy may contradict EU law or delay European integration timeline</li>
-                    <li>Mandatory rural impact assessment for policies affecting >100,000 people</li>
-                    <li>Public consultation period for decisions with budget >€10M</li>
-                    <li>Independent economic review for policies affecting competitiveness</li>
-                    <li>Minority rights protection in all language and cultural policies</li>
-                    <li>Environmental impact assessment for infrastructure projects</li>
-                </ul>
-
-                <h3>Appeal and Review Process</h3>
-                <ul>
-                    <li>Constitutional Court review for fundamental rights issues</li>
-                    <li>European Commission notification for EU-relevant policies</li>
-                    <li>Parliamentary oversight for budget allocations >€50M</li>
-                    <li>Citizen initiative process for policy reconsideration</li>
-                </ul>
+            <div class="transcript-content" id="transcriptContent">
+                <div id="transcriptEntries">
+                    <!-- Transcript entries will be added here dynamically -->
+                </div>
             </div>
-        </section>
+        </div>
+        
+        <div id="decision">
+            <div id="decisionContent"></div>
+            <button id="exportBtn" onclick="exportSession()">📊 Export Session</button>
+        </div>
     </div>
-
+    
     <script>
-        // Global state
-        let sessionData = {
-            issue: '',
-            config: {},
-            round1: [],
-            round2: [],
-            decision: null,
-            appeal: null,
-            timestamp: null
-        };
-
-        // Enhanced Romanian Council Member Profiles (avatars will be generated after functions are defined)
-        const roles = {
-            eu: {
-                name: 'Dr. Elena Popescu',
-                title: 'EU Integration Specialist',
-                icon: '🇪🇺',
-                avatarData: { name: 'elena', color: '#002B7F', initials: 'EP' },
-                shortBio: 'Former EU Commission advisor with 15 years Brussels experience. Led Romania\'s Digital Single Market implementation. Speaks 6 languages.',
-                expertise: 'European law, regulatory compliance, accession processes',
-                decisionPattern: 'Cautious, evidence-based, prioritizes EU alignment',
-                signature: 'Every decision must pass the Brussels test',
-                redline: 'Violates EU directives or delays accession timeline',
-                background: 'Former European Commission advisor, expert in EU law and Romanian integration',
-                perspective: 'EU compliance and integration pathway',
-                colorScheme: '#002B7F'
+        const members = [
+            {
+                name: "Elena Popescu", 
+                role: "EU Integration Specialist", 
+                initials: "EP", 
+                bio: "Former EU Commission advisor with Brussels experience",
+                color: "#002B7F",
+                focus: "EU compliance and integration",
+                avatar: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=150&h=150&fit=crop&crop=faces"
             },
-            digital: {
-                name: 'Alex Ionescu',
-                title: 'Digital Transformation Expert',
-                icon: '💻',
-                avatarData: { name: 'alex', color: '#4A90E2', initials: 'AI' },
-                shortBio: 'Former CTO of Romanian tech unicorn, MIT graduate. Built digital systems used by millions. Pioneer in AI governance.',
-                expertise: 'AI systems, digital infrastructure, startup ecosystems',
-                decisionPattern: 'Innovation-first, calculated risks, scalable solutions',
-                signature: 'If it\'s not digital-first, it\'s already obsolete',
-                redline: 'Creates digital divide or unsustainable tech debt',
-                background: 'Former startup founder, now leading Romania\'s digital agenda',
-                perspective: 'Technology adoption and digital infrastructure',
-                colorScheme: '#4A90E2'
+            {
+                name: "Alex Ionescu", 
+                role: "Digital Technology Expert", 
+                initials: "AI", 
+                bio: "Tech entrepreneur and MIT graduate",
+                color: "#4A90E2",
+                focus: "Technology feasibility and digital innovation",
+                avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=faces"
             },
-            regional: {
-                name: 'Maria Dumitrescu',
-                title: 'Regional Development Advocate',
-                icon: '🏞️',
-                avatarData: { name: 'maria', color: '#8B4513', initials: 'MD' },
-                shortBio: 'Rural development economist from Maramureș. Created Romania\'s most successful rural broadband initiative. Speaks for forgotten communities.',
-                expertise: 'Regional economics, rural-urban balance, demographic trends',
-                decisionPattern: 'Equity-focused, long-term thinking, community-centered',
-                signature: 'Bucharest isn\'t Romania - Romania is in its villages',
-                redline: 'Increases rural-urban inequality significantly',
-                background: 'Rural development expert, advocate for balanced regional growth',
-                perspective: 'Regional balance and rural development',
-                colorScheme: '#8B4513'
+            {
+                name: "Maria Dumitrescu", 
+                role: "Regional Development Advocate", 
+                initials: "MD", 
+                bio: "Rural development economist from Maramureș",
+                color: "#8B4513",
+                focus: "Rural vs urban balance",
+                avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=faces"
             },
-            economic: {
-                name: 'Radu Constantin',
-                title: 'Economic Modernization Advisor',
-                icon: '📊',
-                avatarData: { name: 'radu', color: '#FFD700', initials: 'RC' },
-                shortBio: 'Former McKinsey partner, Romanian National Bank advisor. Architected Romania\'s post-2008 recovery. Obsessed with competitiveness.',
-                expertise: 'Fiscal policy, foreign investment, competitive strategy',
-                decisionPattern: 'Data-driven, growth-oriented, pragmatic',
-                signature: 'Show me the numbers, then show me the ROI',
-                redline: 'Threatens fiscal stability or competitiveness',
-                background: 'Former Finance Ministry advisor, economic policy specialist',
-                perspective: 'Economic competitiveness and fiscal responsibility',
-                colorScheme: '#FFD700'
+            {
+                name: "Radu Constantin", 
+                role: "Economic Advisor", 
+                initials: "RC", 
+                bio: "Former McKinsey partner and National Bank advisor",
+                color: "#FFD700",
+                focus: "Budget analysis and economic impact",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces"
             },
-            citizen: {
-                name: 'Ana Gheorghe',
-                title: 'Citizen Voice Representative',
-                icon: '👥',
-                avatarData: { name: 'ana', color: '#E74C3C', initials: 'AG' },
-                shortBio: 'Former ombudsman, civil society leader with sociology PhD. Designed Romania\'s first participatory budgeting. Champion of transparency.',
-                expertise: 'Public participation, accessibility, democratic processes',
-                decisionPattern: 'Inclusive, accessible, transparency-focused',
-                signature: 'The best policy is the one citizens actually understand',
-                redline: 'Excludes or burdens significant population groups',
-                background: 'Civil society leader, advocate for citizen participation',
-                perspective: 'Public concerns and democratic participation',
-                colorScheme: '#E74C3C'
+            {
+                name: "Ana Gheorghe", 
+                role: "Citizen Voice Representative", 
+                initials: "AG", 
+                bio: "Civil society leader and former ombudsman",
+                color: "#E74C3C",
+                focus: "Public impact and accessibility",
+                avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=faces"
             }
+        ];
+
+        // Chairman data
+        const chairman = {
+            name: "Mircea Codrescu",
+            title: "Council Chairman & Final Arbiter",
+            initials: "MC",
+            avatar: "https://images.unsplash.com/photo-1556157382-97eda2d62296?w=150&h=150&fit=crop&crop=faces"
         };
 
-        // Judge Minerva - Independent AI Arbiter
-        const judgeArbiter = {
-            name: 'Judge Minerva',
-            title: 'Constitutional AI Arbiter',
-            icon: '⚖️',
-            shortBio: 'Constitutional AI trained on Romanian law, EU treaties, and democratic theory. Provides independent oversight of all decisions.',
-            role: 'Independent constitutional and procedural oversight',
-            decisionTypes: ['APPROVED', 'APPROVED WITH CONDITIONS', 'CONSTITUTIONAL CONCERN', 'BLOCKED', 'REMAND TO COUNCIL']
-        };
+        let sessionData = {};
+        let transcriptEntries = [];
 
-        // Avatar generation functions
-        function generateProfileAvatar(name, color, initials) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 80;
-            canvas.height = 80;
-            const ctx = canvas.getContext('2d');
-            
-            // Background with color scheme
-            const gradient = ctx.createLinearGradient(0, 0, 80, 80);
-            gradient.addColorStop(0, color);
-            gradient.addColorStop(1, adjustBrightness(color, -20));
-            
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, 80, 80);
-            
-            // Professional overlay pattern
-            ctx.globalAlpha = 0.1;
-            for (let i = 0; i < 80; i += 10) {
-                ctx.strokeStyle = '#ffffff';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(i, 0);
-                ctx.lineTo(i + 80, 80);
-                ctx.stroke();
+        // Cross-discussion scenarios
+        const discussionScenarios = [
+            {
+                from: "EP", to: "AI", 
+                message: "Alex, your tech focus is great, but we must ensure EU data compliance..."
+            },
+            {
+                from: "AI", to: "MD", 
+                message: "Maria, digital infrastructure can actually help rural areas - let me explain..."
+            },
+            {
+                from: "MD", to: "RC", 
+                message: "Radu, the budget numbers look good, but what about rural implementation costs?"
+            },
+            {
+                from: "RC", to: "AG", 
+                message: "Ana, citizen benefits are clear, but we need sustainable financing..."
+            },
+            {
+                from: "AG", to: "EP", 
+                message: "Elena, EU requirements are fine, but citizens need to understand them..."
             }
-            ctx.globalAlpha = 1;
-            
-            // Initials
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 24px Inter';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(initials, 40, 40);
-            
-            // Professional border
-            ctx.strokeStyle = adjustBrightness(color, 30);
-            ctx.lineWidth = 3;
-            ctx.strokeRect(0, 0, 80, 80);
-            
-            return canvas.toDataURL();
-        }
+        ];
 
-        function generateJudicialAvatar() {
-            const canvas = document.createElement('canvas');
-            canvas.width = 80;
-            canvas.height = 80;
-            const ctx = canvas.getContext('2d');
-            
-            // Judicial robe background
-            const gradient = ctx.createLinearGradient(0, 0, 80, 80);
-            gradient.addColorStop(0, '#1a1a1a');
-            gradient.addColorStop(1, '#000000');
-            
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, 80, 80);
-            
-            // Romanian coat of arms inspired pattern
-            ctx.fillStyle = '#FFD700';
-            ctx.beginPath();
-            ctx.arc(40, 30, 15, 0, 2 * Math.PI);
-            ctx.fill();
-            
-            // Scales of justice
-            ctx.strokeStyle = '#FFD700';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(40, 45);
-            ctx.lineTo(40, 65);
-            ctx.moveTo(25, 50);
-            ctx.lineTo(55, 50);
-            ctx.moveTo(25, 50);
-            ctx.lineTo(30, 55);
-            ctx.moveTo(55, 50);
-            ctx.lineTo(50, 55);
-            ctx.stroke();
-            
-            // Minerva symbol
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 16px Inter';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('⚖', 40, 30);
-            
-            return canvas.toDataURL();
-        }
+        // Chairman responses
+        const chairmanResponses = {
+            opening: "📋 Session opened. Council members, please present your initial analysis.",
+            discussion: "🗣️ Facilitating cross-member discussion and debate...",
+            synthesis: "⚖️ Analyzing member positions and seeking consensus...",
+            decision: "✅ Final decision reached based on expert deliberation."
+        };
 
-        function adjustBrightness(color, amount) {
-            const usePound = color[0] === '#';
-            const col = usePound ? color.slice(1) : color;
-            const num = parseInt(col, 16);
-            let r = (num >> 16) + amount;
-            let g = (num >> 8 & 0x00FF) + amount;
-            let b = (num & 0x0000FF) + amount;
-            r = r > 255 ? 255 : r < 0 ? 0 : r;
-            g = g > 255 ? 255 : g < 0 ? 0 : g;
-            b = b > 255 ? 255 : b < 0 ? 0 : b;
-            return (usePound ? '#' : '') + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            // Generate avatars after functions are defined
-            Object.keys(roles).forEach(roleKey => {
-                const role = roles[roleKey];
-                if (role.avatarData) {
-                    role.avatar = generateProfileAvatar(role.avatarData.name, role.avatarData.color, role.avatarData.initials);
-                }
-            });
+        // Initialize the council grid
+        function initializeCouncil() {
+            const grid = document.getElementById('council');
+            grid.innerHTML = '';
             
-            // Generate Judge Minerva avatar
-            judgeArbiter.avatar = generateJudicialAvatar();
-            
-            setupWeightControls();
-            setupEventListeners();
-            updateProgress(0);
-        });
-
-        function setupWeightControls() {
-            Object.keys(roles).forEach(roleKey => {
-                const slider = document.getElementById(roleKey + 'Weight');
-                const value = document.getElementById(roleKey + 'Value');
+            members.forEach(member => {
+                const card = document.createElement('div');
+                card.className = 'member-card';
+                card.id = `card-${member.initials}`;
                 
-                if (slider && value) {
-                    slider.addEventListener('input', function() {
-                        value.textContent = slider.value + 'x';
-                    });
-                }
+                card.innerHTML = `
+                    <div class="member-header">
+                        <div class="profile-img" style="background: ${member.color};">
+                            <img src="${member.avatar}" alt="${member.name}" onerror="this.style.display='none'; this.nextElementSibling.style.opacity='1';">
+                            <div class="initials">${member.initials}</div>
+                        </div>
+                        <div class="member-info">
+                            <h3>${member.name}</h3>
+                            <div class="role">${member.role}</div>
+                            <div class="bio">${member.bio}</div>
+                        </div>
+                    </div>
+                    <div class="discussion-bubble" id="discussion-${member.initials}">
+                        💬 <span id="discussionText-${member.initials}"></span>
+                    </div>
+                    <div class="response" id="response-${member.initials}">
+                        <strong>Position:</strong> <span id="position-${member.initials}"></span><br>
+                        <strong>Analysis:</strong> <span id="analysis-${member.initials}"></span>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
             });
         }
 
-        function setupEventListeners() {
-            document.getElementById('runCouncilBtn').addEventListener('click', runCouncil);
-            document.getElementById('exportBtn').addEventListener('click', exportSession);
-            document.getElementById('copyDemoBtn').addEventListener('click', copyDemoLink);
+        // Simple response generation
+        function generateResponse(member, issue) {
+            const responses = {
+                "EP": {
+                    positions: ["EU compliant", "Requires Brussels review", "Supports integration"],
+                    analyses: [
+                        "This aligns with European standards and integration goals.",
+                        "We need to ensure compliance with EU directives.",
+                        "Brussels coordination will be essential for success."
+                    ]
+                },
+                "AI": {
+                    positions: ["Digitally progressive", "Needs tech upgrade", "Innovation opportunity"],
+                    analyses: [
+                        "Strong digital component with scalable infrastructure.",
+                        "Requires modern technology stack and proper implementation.",
+                        "Could position Romania as a digital leader in the region."
+                    ]
+                },
+                "MD": {
+                    positions: ["Regionally balanced", "Rural-first approach", "Equity concerns"],
+                    analyses: [
+                        "Must ensure equal benefits for rural and urban areas.",
+                        "Bucharest-centric policies often leave villages behind.",
+                        "Need decentralized implementation and local engagement."
+                    ]
+                },
+                "RC": {
+                    positions: ["Economically viable", "Budget concerns", "ROI positive"],
+                    analyses: [
+                        "Numbers look good with sustainable financing model.",
+                        "Requires careful budget analysis and phased approach.",
+                        "Strong economic fundamentals with competitive advantages."
+                    ]
+                },
+                "AG": {
+                    positions: ["Public support", "Needs consultation", "Accessibility focus"],
+                    analyses: [
+                        "Citizens will benefit with proper communication.",
+                        "Requires extensive public consultation and feedback.",
+                        "Must ensure inclusive design for all population groups."
+                    ]
+                }
+            };
+
+            const memberResponses = responses[member.initials];
+            const position = memberResponses.positions[Math.floor(Math.random() * memberResponses.positions.length)];
+            const analysis = memberResponses.analyses[Math.floor(Math.random() * memberResponses.analyses.length)];
             
-            // Keyboard support
-            document.getElementById('issueInput').addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === 'Enter') {
-                    runCouncil();
-                }
+            return { position, analysis };
+        }
+
+
+        // Transcript functions
+        function addTranscriptEntry(speaker, message, avatar, type = 'discussion') {
+            transcriptEntries.push({
+                speaker: speaker,
+                message: message,
+                avatar: avatar,
+                type: type,
+                timestamp: new Date().toISOString()
             });
+            
+            const transcriptContainer = document.getElementById('transcriptEntries');
+            const entry = document.createElement('div');
+            entry.className = 'transcript-entry';
+            
+            entry.innerHTML = `
+                <div class="transcript-avatar">
+                    <img src="${avatar}" alt="${speaker}" onerror="this.style.display='none';">
+                </div>
+                <div class="transcript-message">
+                    <div class="transcript-speaker">${speaker}</div>
+                    <div class="transcript-text">${message}</div>
+                </div>
+            `;
+            
+            transcriptContainer.appendChild(entry);
+            
+            // Auto-scroll to bottom
+            setTimeout(() => {
+                transcriptContainer.scrollTop = transcriptContainer.scrollHeight;
+            }, 100);
         }
 
-        function fillSampleIssue(issue) {
-            document.getElementById('issueInput').value = issue;
+        function addTranscriptPhase(phaseName) {
+            const transcriptContainer = document.getElementById('transcriptEntries');
+            const phase = document.createElement('div');
+            phase.className = 'transcript-phase';
+            phase.innerHTML = `<div class="transcript-phase-title">${phaseName}</div>`;
+            transcriptContainer.appendChild(phase);
         }
 
-        function updateProgress(percentage) {
-            document.getElementById('progressBar').style.width = percentage + '%';
+        function toggleTranscript() {
+            const content = document.getElementById('transcriptContent');
+            const toggle = document.getElementById('transcriptToggle');
+            
+            content.classList.toggle('expanded');
+            toggle.classList.toggle('expanded');
         }
 
+        function clearTranscript() {
+            document.getElementById('transcriptEntries').innerHTML = '';
+            transcriptEntries = [];
+        }
+
+        // Visual discussion animation
+        async function showDiscussion(from, to, message) {
+            const fromCard = document.getElementById(`card-${from}`);
+            const toCard = document.getElementById(`card-${to}`);
+            const discussionBubble = document.getElementById(`discussion-${from}`);
+            const discussionText = document.getElementById(`discussionText-${from}`);
+            
+            // Animate discussion line
+            const discussionLine = document.getElementById('discussionLine');
+            discussionLine.style.animation = 'none';
+            setTimeout(() => {
+                discussionLine.style.animation = 'flowDiscussion 2s ease-in-out';
+            }, 10);
+            
+            // Highlight cards
+            fromCard.classList.add('discussing');
+            toCard.classList.add('responding');
+            
+            // Show discussion bubble
+            discussionText.textContent = message;
+            discussionBubble.classList.add('show');
+            
+            // Add to transcript
+            const fromMember = members.find(m => m.initials === from);
+            const toMember = members.find(m => m.initials === to);
+            if (fromMember) {
+                addTranscriptEntry(
+                    `${fromMember.name} → ${toMember.name}`, 
+                    message, 
+                    fromMember.avatar
+                );
+            }
+            
+            await new Promise(resolve => setTimeout(resolve, 3500)); // Longer duration to read
+            
+            // Clean up
+            fromCard.classList.remove('discussing');
+            toCard.classList.remove('responding');
+            discussionBubble.classList.remove('show');
+        }
+
+        // Update chairman status
+        function updateChairmanStatus(status) {
+            document.getElementById('chairmanStatus').textContent = chairmanResponses[status];
+        }
+
+        // Main function to run the council
         async function runCouncil() {
-            const issue = document.getElementById('issueInput').value.trim();
+            const issue = document.getElementById('issue').value.trim();
             if (!issue) {
-                alert('Please enter a policy issue to deliberate.');
+                alert('Please enter a policy issue first!');
                 return;
             }
 
-            // Capture configuration
-            sessionData.issue = issue;
-            sessionData.config = {
-                protocol: document.getElementById('protocol').value,
-                riskTolerance: document.getElementById('riskTolerance').value,
-                budgetCap: parseInt(document.getElementById('budgetCap').value),
-                weights: {}
+            // Initialize session data
+            sessionData = {
+                issue: issue,
+                responses: [],
+                discussions: [],
+                decision: null,
+                timestamp: new Date().toISOString()
             };
 
-            Object.keys(roles).forEach(roleKey => {
-                const slider = document.getElementById(roleKey + 'Weight');
-                if (slider) {
-                    sessionData.config.weights[roleKey] = parseFloat(slider.value);
-                }
+            // Disable button
+            document.getElementById('runBtn').disabled = true;
+            document.getElementById('runBtn').textContent = 'Council Deliberating...';
+
+            // Show chairman and reset state
+            document.getElementById('chairman').classList.add('show');
+            document.getElementById('transcript').classList.add('show');
+            document.getElementById('decision').classList.remove('show');
+            document.getElementById('exportBtn').classList.remove('show');
+            
+            // Clear previous transcript
+            clearTranscript();
+            
+            members.forEach(member => {
+                const card = document.getElementById(`card-${member.initials}`);
+                card.classList.remove('thinking', 'discussing', 'responding');
+                document.getElementById(`response-${member.initials}`).classList.remove('show');
+                document.getElementById(`discussion-${member.initials}`).classList.remove('show');
             });
 
-            sessionData.timestamp = new Date().toISOString();
+            // Phase 1: Chairman opens session
+            addTranscriptPhase("📋 Session Opening");
+            updateChairmanStatus('opening');
+            addTranscriptEntry(
+                chairman.name, 
+                "Good day, council members. We are gathered to deliberate on this important policy matter. Please provide your expert analysis.",
+                chairman.avatar,
+                'chairman'
+            );
+            await new Promise(resolve => setTimeout(resolve, 2000));
 
-            // Show results section and loading
-            document.getElementById('results').classList.remove('hidden');
-            document.getElementById('loading').classList.remove('hidden');
-            updateProgress(10);
-
-            // Hide other sections
-            ['judgeObserving', 'round1', 'round2', 'decision', 'appeal', 'judgeFinal'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-                document.getElementById(id).classList.remove('visible');
-            });
-
-            // Disable run button
-            document.getElementById('runCouncilBtn').disabled = true;
-
-            // Simulate deliberation process
-            await simulateDeliberation();
-        }
-
-        async function simulateDeliberation() {
-            // Judge Minerva starts observing
-            updateProgress(15);
-            await delay(1500);
-            await showJudgeObserving();
-            
-            // Round 1
-            updateProgress(25);
-            await delay(2000);
-            await showRound1();
-            updateProgress(50);
-            
-            // Round 2  
-            await delay(3000);
-            await showRound2();
-            updateProgress(75);
-            
-            // Decision
-            await delay(2000);
-            await showDecision();
-            updateProgress(85);
-            
-            // Appeal
-            await delay(2000);
-            await showAppeal();
-            updateProgress(95);
-            
-            // Judge Minerva Final Ruling
-            await delay(2500);
-            await showJudgeFinalRuling();
-            updateProgress(100);
-            
-            // Hide loading and show export
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('exportBtn').style.display = 'inline-block';
-            document.getElementById('runCouncilBtn').disabled = false;
-        }
-
-        async function showRound1() {
-            const round1Data = generateRound1Recommendations();
-            sessionData.round1 = round1Data;
-            
-            renderRoles('round1Roles', round1Data, true);
-            const round1Element = document.getElementById('round1');
-            round1Element.classList.remove('hidden');
-            
-            // Animate cards appearing
-            setTimeout(() => {
-                round1Element.classList.add('visible');
-            }, 100);
-        }
-
-        async function showRound2() {
-            const round2Data = generateRound2Revisions();
-            sessionData.round2 = round2Data;
-            
-            renderRoles('round2Roles', round2Data, false);
-            const round2Element = document.getElementById('round2');
-            round2Element.classList.remove('hidden');
-            
-            setTimeout(() => {
-                round2Element.classList.add('visible');
-            }, 100);
-        }
-
-        async function showDecision() {
-            const decision = generateSovereignDecision();
-            sessionData.decision = decision;
-            
-            renderDecision(decision);
-            const decisionElement = document.getElementById('decision');
-            decisionElement.classList.remove('hidden');
-            
-            setTimeout(() => {
-                decisionElement.classList.add('visible');
-            }, 100);
-        }
-
-        async function showAppeal() {
-            const appeal = generateAppealReview();
-            sessionData.appeal = appeal;
-            
-            renderAppeal(appeal);
-            const appealElement = document.getElementById('appeal');
-            appealElement.classList.remove('hidden');
-            
-            setTimeout(() => {
-                appealElement.classList.add('visible');
-            }, 100);
-        }
-
-        async function showJudgeObserving() {
-            renderJudgeObserving();
-            const judgeElement = document.getElementById('judgeObserving');
-            judgeElement.classList.remove('hidden');
-            
-            setTimeout(() => {
-                judgeElement.classList.add('visible');
-            }, 100);
-        }
-
-        async function showJudgeFinalRuling() {
-            const ruling = generateJudgeFinalRuling();
-            sessionData.judgeRuling = ruling;
-            
-            renderJudgeFinalRuling(ruling);
-            const judgeElement = document.getElementById('judgeFinal');
-            judgeElement.classList.remove('hidden');
-            
-            setTimeout(() => {
-                judgeElement.classList.add('visible');
-            }, 100);
-        }
-
-        function generateRound1Recommendations() {
-            const issue = sessionData.issue;
-            const recommendations = [];
-
-            // EU Integration Specialist
-            recommendations.push({
-                role: 'eu',
-                recommendation: getRandomChoice(['EU compliant with monitoring', 'Requires directive alignment', 'Supports integration goals']),
-                rationale: `From an EU integration perspective, this initiative must align with European standards and support Romania's path to full membership. ${getContextualInsight('eu', issue)}`,
-                characterBasedRationale: generateCharacterBasedResponse('eu', issue, 'analysis'),
-                risks: ['EU directive violations', 'Integration timeline delays', 'Regulatory misalignment'],
-                mitigations: ['EU Commission consultation', 'Directive compliance review', 'Member state coordination'],
-                evidence: 'EU legal framework analysis, similar policies in other member states',
-                changeMind: 'European Commission formal objection or directive conflict',
-                background: roles.eu.background
-            });
-
-            // Digital Transformation Expert
-            recommendations.push({
-                role: 'digital',
-                recommendation: getRandomChoice(['Digitally progressive', 'Requires infrastructure upgrade', 'Innovation opportunity']),
-                rationale: `This represents a significant opportunity for Romania's digital transformation agenda. ${getContextualInsight('digital', issue)}`,
-                characterBasedRationale: generateCharacterBasedResponse('digital', issue, 'analysis'),
-                risks: ['Digital divide expansion', 'Infrastructure inadequacy', 'Tech debt accumulation'],
-                mitigations: ['Inclusive digital access', 'Infrastructure investment', 'Scalable architecture'],
-                evidence: 'Digital Romania 2030 strategy, comparative technology assessments',
-                changeMind: 'Evidence of insurmountable digital divide creation',
-                background: roles.digital.background
-            });
-
-            // Regional Development Advocate
-            recommendations.push({
-                role: 'regional',
-                recommendation: getRandomChoice(['Regionally balanced', 'Requires rural focus', 'Bucharest-centric risk']),
-                rationale: `Regional impact analysis shows this could affect the balance between urban and rural development. ${getContextualInsight('regional', issue)}`,
-                characterBasedRationale: generateCharacterBasedResponse('regional', issue, 'analysis'),
-                risks: ['Rural area exclusion', 'Bucharest centralization', 'Regional inequality'],
-                mitigations: ['Rural-first implementation', 'Regional quotas', 'Decentralized delivery'],
-                evidence: 'Regional development statistics, rural access studies',
-                changeMind: 'Clear evidence of rural disadvantage or exclusion',
-                background: roles.regional.background
-            });
-
-            // Economic Modernization Advisor
-            recommendations.push({
-                role: 'economic',
-                recommendation: getRandomChoice(['Economically viable', 'ROI positive', 'Requires investment']),
-                rationale: `Economic analysis indicates this could contribute to Romania's competitiveness goals. ${getContextualInsight('economic', issue)}`,
-                characterBasedRationale: generateCharacterBasedResponse('economic', issue, 'analysis'),
-                risks: ['Fiscal burden', 'Competitiveness impact', 'Investment sustainability'],
-                mitigations: ['Phased investment', 'Performance metrics', 'Economic monitoring'],
-                evidence: 'Economic impact modeling, comparative country analysis',
-                changeMind: 'Fiscal sustainability threat or competitiveness decline',
-                background: roles.economic.background
-            });
-
-            // Citizen Voice Representative
-            recommendations.push({
-                role: 'citizen',
-                recommendation: getRandomChoice(['Public support strong', 'Requires consultation', 'Mixed reception expected']),
-                rationale: `Citizen impact assessment suggests this addresses real public needs. ${getContextualInsight('citizen', issue)}`,
-                characterBasedRationale: generateCharacterBasedResponse('citizen', issue, 'analysis'),
-                risks: ['Public resistance', 'Access barriers', 'Democratic deficit'],
-                mitigations: ['Public consultation', 'Accessibility measures', 'Feedback mechanisms'],
-                evidence: 'Public opinion surveys, citizen consultations, civil society input',
-                changeMind: 'Significant public opposition or exclusion of vulnerable groups',
-                background: roles.citizen.background
-            });
-
-            return recommendations;
-        }
-
-        function generateRound2Revisions() {
-            const round1 = sessionData.round1;
-            const revisions = [];
-
-            round1.forEach(original => {
-                const revision = { ...original };
+            // Phase 2: Initial member analysis
+            addTranscriptPhase("💭 Expert Analysis Phase");
+            for (let i = 0; i < members.length; i++) {
+                const member = members[i];
+                const card = document.getElementById(`card-${member.initials}`);
                 
-                // Add cross-critiques
-                const otherRoles = round1.filter(r => r.role !== original.role);
-                revision.critiques = otherRoles.map(other => ({
-                    target: roles[other.role].name,
-                    critique: generateRomanianCritique(original.role, other.role, sessionData.issue)
-                }));
-
-                // Add refined position
-                revision.refinedPosition = `After cross-perspective analysis: ${getRevisionInsight(original.role, sessionData.issue)}`;
+                // Show thinking state
+                card.classList.add('thinking');
+                await new Promise(resolve => setTimeout(resolve, 1500));
                 
-                revisions.push(revision);
-            });
-
-            return revisions;
-        }
-
-        function generateSovereignDecision() {
-            const protocol = sessionData.config.protocol;
-            const weights = sessionData.config.weights;
-            
-            const outcome = getRandomChoice(['APPROVE', 'APPROVE WITH CONDITIONS', 'REJECT']);
-            const confidence = Math.random() * 0.4 + 0.6; // 60-100%
-            
-            return {
-                outcome: outcome,
-                confidence: confidence,
-                protocol: protocol,
-                rationale: `Based on Romanian national interests and ${protocol} protocol: ${getDecisionRationale()}`,
-                supportingArguments: [
-                    'Aligns with EU integration objectives',
-                    'Supports digital transformation goals',
-                    'Maintains regional development balance',
-                    'Economically sustainable approach'
-                ],
-                conditions: outcome.includes('CONDITIONS') ? [
-                    'EU Commission consultation required',
-                    'Rural impact mitigation measures',
-                    'Quarterly progress reviews',
-                    'Public feedback mechanisms'
-                ] : [],
-                minorityReport: 'Some concerns remain about implementation timeline and resource allocation.',
-                timeline: '6 months planning, 18 months implementation, 12 months evaluation',
-                budget: Math.min(sessionData.config.budgetCap * 0.8, 2000000),
-                kpis: [
-                    'EU compliance rating',
-                    'Digital adoption metrics',
-                    'Regional equity index',
-                    'Economic impact measurement',
-                    'Citizen satisfaction score'
-                ]
-            };
-        }
-
-        function generateAppealReview() {
-            const decision = sessionData.decision;
-            const constitutionCheck = Math.random() > 0.15; // 85% pass rate
-            
-            return {
-                outcome: constitutionCheck ? 'UPHOLD' : 'REMAND',
-                rationale: constitutionCheck ? 
-                    'Decision complies with Romanian Digital Governance Constitution and EU legal framework.' :
-                    'Decision requires additional consultation period and rural impact assessment.',
-                constitutionCompliance: {
-                    euAlignment: constitutionCheck,
-                    digitalTransformation: true,
-                    regionalBalance: constitutionCheck,
-                    economicCompetitiveness: constitutionCheck,
-                    citizenParticipation: true,
-                    transparency: constitutionCheck
-                },
-                recommendations: constitutionCheck ? 
-                    ['Proceed with implementation as planned', 'Monitor KPIs quarterly'] :
-                    ['Conduct additional rural consultation', 'Revise regional impact assessment', 'Re-submit for review']
-            };
-        }
-
-        function renderRoles(containerId, roleData, showThinking = false) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-
-            roleData.forEach((data, index) => {
-                const role = roles[data.role];
-                const weight = sessionData.config.weights[data.role] || 1.0;
+                // Generate and show response
+                const response = generateResponse(member, issue);
+                document.getElementById(`position-${member.initials}`).textContent = response.position;
+                document.getElementById(`analysis-${member.initials}`).textContent = response.analysis;
+                document.getElementById(`response-${member.initials}`).classList.add('show');
                 
-                const card = document.createElement('div');
-                card.className = 'role-card';
-                card.style.borderTopColor = role.colorScheme;
-                if (showThinking) {
-                    card.classList.add('thinking');
-                    setTimeout(() => card.classList.remove('thinking'), 3000 + index * 500);
-                }
+                // Add to transcript
+                addTranscriptEntry(
+                    member.name,
+                    `Position: ${response.position}. ${response.analysis}`,
+                    member.avatar,
+                    'analysis'
+                );
                 
-                card.innerHTML = `
-                    <div class="role-header" onclick="toggleRole('${containerId}', '${data.role}')">
-                        <div class="role-info">
-                            <img src="${role.avatar}" alt="${role.name}" class="role-avatar" style="border-color: ${role.colorScheme};">
-                            <div>
-                                <div class="role-name">${role.name}</div>
-                                <div class="role-title">${role.title}</div>
-                                <div class="role-bio">${role.shortBio}</div>
-                            </div>
-                        </div>
-                        <div class="role-weight" style="color: ${role.colorScheme};">${weight}x weight</div>
-                    </div>
-                    <div class="role-content" id="${containerId}_${data.role}">
-                        <div class="recommendation" style="border-left-color: ${role.colorScheme};">
-                            <h4>Current Position</h4>
-                            <p><strong>${data.recommendation}</strong></p>
-                            <p><em>"${role.signature}"</em></p>
-                        </div>
-                        <div class="recommendation">
-                            <h4>Expert Analysis</h4>
-                            <p>${data.characterBasedRationale || data.rationale}</p>
-                        </div>
-                        ${data.refinedPosition ? `
-                            <div class="recommendation" style="background: rgba(${hexToRgb(role.colorScheme)}, 0.1);">
-                                <h4>Refined Position After Discussion</h4>
-                                <p>${data.refinedPosition}</p>
-                            </div>
-                        ` : ''}
-                        <div class="recommendation">
-                            <h4>Professional Background</h4>
-                            <p><strong>Expertise:</strong> ${role.expertise}</p>
-                            <p><strong>Decision Pattern:</strong> ${role.decisionPattern}</p>
-                            <p><strong>Background:</strong> ${role.background}</p>
-                        </div>
-                        <div class="recommendation">
-                            <h4>Risk Assessment</h4>
-                            <p><strong>Key Concerns:</strong> ${data.risks.join(', ')}</p>
-                            <p><strong>Proposed Mitigations:</strong> ${data.mitigations.join(', ')}</p>
-                        </div>
-                        <div class="recommendation">
-                            <h4>Evidence & Red Lines</h4>
-                            <p><strong>Evidence Base:</strong> ${data.evidence}</p>
-                            <p><strong>Red Line:</strong> ${data.changeMind}</p>
-                        </div>
-                        ${data.critiques ? `
-                            <div class="recommendation">
-                                <h4>Responses to Colleagues</h4>
-                                ${data.critiques.map(c => `<p><strong>To ${c.target}:</strong> ${c.critique}</p>`).join('')}
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
-                container.appendChild(card);
+                // Save response
+                sessionData.responses.push({
+                    member: member.name,
+                    role: member.role,
+                    position: response.position,
+                    analysis: response.analysis
+                });
                 
-                // Animate card appearance
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 200);
-            });
-        }
-
-        function renderJudgeArbiter() {
-            // This will be called during deliberation to show Judge Minerva observing
-        }
-
-        function renderJudgeObserving() {
-            const container = document.getElementById('judgeObservingContent');
-            container.innerHTML = `
-                <div style="text-align: center; padding: 1rem;">
-                    <img src="${judgeArbiter.avatar}" alt="${judgeArbiter.name}" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #FFD700; margin-bottom: 1rem;">
-                    <h3 style="color: #FFD700; margin-bottom: 0.5rem;">${judgeArbiter.name}</h3>
-                    <p style="color: #B8C5D1; font-style: italic; margin-bottom: 1rem;">${judgeArbiter.shortBio}</p>
-                    <div style="background: rgba(255, 215, 0, 0.1); padding: 1rem; border-radius: 10px; border-left: 3px solid #FFD700;">
-                        <p style="color: #FFD700; font-weight: 600;">🔍 Currently Observing</p>
-                        <p style="color: #E0E6ED;">Monitoring deliberation process for constitutional compliance and procedural integrity...</p>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderJudgeFinalRuling(ruling) {
-            const container = document.getElementById('judgeFinalContent');
-            container.innerHTML = `
-                <div style="text-align: center; margin-bottom: 2rem;">
-                    <img src="${judgeArbiter.avatar}" alt="${judgeArbiter.name}" style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid #FFD700; margin-bottom: 1rem;">
-                    <div style="font-size: 2rem; font-weight: 700; color: ${getRulingColor(ruling.outcome)}; margin-bottom: 0.5rem;">
-                        ${ruling.outcome}
-                    </div>
-                    <p style="color: #B8C5D1;">Constitutional AI Arbiter Final Determination</p>
-                </div>
-                
-                <div class="recommendation" style="border-left-color: #FFD700;">
-                    <h4>Constitutional Analysis</h4>
-                    <p>${ruling.constitutionalAnalysis}</p>
-                </div>
-
-                <div class="recommendation">
-                    <h4>Procedural Review</h4>
-                    <p>${ruling.proceduralReview}</p>
-                </div>
-
-                <div class="recommendation">
-                    <h4>Democratic Principles Assessment</h4>
-                    <ul>
-                        <li>Transparency: ${ruling.democraticCompliance.transparency ? '✅' : '❌'}</li>
-                        <li>Representation: ${ruling.democraticCompliance.representation ? '✅' : '❌'}</li>
-                        <li>Accountability: ${ruling.democraticCompliance.accountability ? '✅' : '❌'}</li>
-                        <li>Due Process: ${ruling.democraticCompliance.dueProcess ? '✅' : '❌'}</li>
-                    </ul>
-                </div>
-
-                ${ruling.conditions && ruling.conditions.length > 0 ? `
-                    <div class="recommendation" style="background: rgba(255, 215, 0, 0.1);">
-                        <h4>Mandatory Conditions</h4>
-                        <ul>${ruling.conditions.map(condition => `<li>${condition}</li>`).join('')}</ul>
-                    </div>
-                ` : ''}
-
-                <div class="recommendation">
-                    <h4>Final Directive</h4>
-                    <p>${ruling.finalDirective}</p>
-                </div>
-            `;
-        }
-
-        function hexToRgb(hex) {
-            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? 
-                `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : 
-                '255, 255, 255';
-        }
-
-        function getRulingColor(outcome) {
-            switch(outcome) {
-                case 'APPROVED': return '#4CAF50';
-                case 'APPROVED WITH CONDITIONS': return '#FFD700';
-                case 'CONSTITUTIONAL CONCERN': return '#FF9800';
-                case 'BLOCKED': return '#f44336';
-                case 'REMAND TO COUNCIL': return '#E74C3C';
-                default: return '#FFD700';
+                card.classList.remove('thinking');
+                await new Promise(resolve => setTimeout(resolve, 800));
             }
-        }
 
-        function renderDecision(decision) {
-            const container = document.getElementById('decisionContent');
-            container.innerHTML = `
-                <div class="decision-result">
-                    <div class="decision-outcome ${decision.outcome.toLowerCase().replace(/\s+/g, '-')}">${decision.outcome}</div>
-                    <p>Confidence: ${Math.round(decision.confidence * 100)}% | Protocol: ${decision.protocol}</p>
-                </div>
-                
-                <div class="recommendation">
-                    <h4>Decision Rationale</h4>
-                    <p>${decision.rationale}</p>
-                </div>
+            // Phase 3: Cross-member discussion
+            addTranscriptPhase("🗣️ Cross-Member Discussion");
+            updateChairmanStatus('discussion');
+            addTranscriptEntry(
+                chairman.name,
+                "Now I invite you to engage with each other's perspectives. Let's hear your cross-analyses.",
+                chairman.avatar,
+                'chairman'
+            );
+            await new Promise(resolve => setTimeout(resolve, 1500));
 
-                <div class="recommendation">
-                    <h4>Supporting Analysis</h4>
-                    <ul>${decision.supportingArguments.map(arg => `<li>${arg}</li>`).join('')}</ul>
-                </div>
+            // Show 3 random discussions
+            const shuffledDiscussions = [...discussionScenarios].sort(() => 0.5 - Math.random());
+            for (let i = 0; i < 3; i++) {
+                const discussion = shuffledDiscussions[i];
+                await showDiscussion(discussion.from, discussion.to, discussion.message);
+                sessionData.discussions.push(discussion);
+            }
 
-                ${decision.conditions.length > 0 ? `
-                    <div class="recommendation">
-                        <h4>Implementation Conditions</h4>
-                        <ul>${decision.conditions.map(condition => `<li>${condition}</li>`).join('')}</ul>
-                    </div>
-                ` : ''}
+            // Phase 4: Chairman synthesis
+            addTranscriptPhase("⚖️ Chairman Synthesis");
+            updateChairmanStatus('synthesis');
+            addTranscriptEntry(
+                chairman.name,
+                "Thank you all. I am now synthesizing your expert perspectives to reach a balanced decision.",
+                chairman.avatar,
+                'chairman'
+            );
+            await new Promise(resolve => setTimeout(resolve, 2000));
 
-                <div class="recommendation">
-                    <h4>Minority Perspective</h4>
-                    <p>${decision.minorityReport}</p>
-                </div>
+            // Phase 5: Final decision by chairman
+            const decision = generateChairmanDecision();
+            sessionData.decision = decision;
+            updateChairmanStatus('decision');
+            addTranscriptEntry(
+                chairman.name,
+                `Final Decision: ${decision.outcome}. ${decision.synthesis}. ${decision.rationale}`,
+                chairman.avatar,
+                'decision'
+            );
 
-                <div class="recommendation">
-                    <h4>Implementation Framework</h4>
-                    <p><strong>Timeline:</strong> ${decision.timeline}</p>
-                    <p><strong>Budget:</strong> €${decision.budget.toLocaleString()}</p>
-                </div>
-
-                <div class="recommendation">
-                    <h4>Success Metrics</h4>
-                    <ul>${decision.kpis.map(kpi => `<li>${kpi}</li>`).join('')}</ul>
-                </div>
+            // Show decision
+            const decisionContent = document.getElementById('decisionContent');
+            decisionContent.innerHTML = `
+                <div class="decision-outcome ${decision.outcome.toLowerCase().replace(/\s+/g, '-')}">${decision.outcome}</div>
+                <p><strong>Chairman's Confidence:</strong> ${decision.confidence}%</p>
+                <p><strong>Final Rationale:</strong> ${decision.rationale}</p>
+                <p><strong>Synthesis:</strong> ${decision.synthesis}</p>
             `;
+            document.getElementById('decision').classList.add('show');
+            document.getElementById('exportBtn').classList.add('show');
+
+            // Re-enable button
+            document.getElementById('runBtn').disabled = false;
+            document.getElementById('runBtn').textContent = 'Run Council';
         }
 
-        function renderAppeal(appeal) {
-            const container = document.getElementById('appealContent');
-            container.innerHTML = `
-                <div class="appeal-result">
-                    <div class="appeal-outcome ${appeal.outcome.toLowerCase()}">${appeal.outcome}</div>
-                    <p>Constitutional Review Complete</p>
-                </div>
-                
-                <div class="recommendation">
-                    <h4>Review Analysis</h4>
-                    <p>${appeal.rationale}</p>
-                </div>
+        // Enhanced decision generation by chairman
+        function generateChairmanDecision() {
+            const outcomes = ["APPROVED", "APPROVED WITH CONDITIONS", "NEEDS REVISION"];
+            const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+            const confidence = Math.floor(Math.random() * 30) + 70; // 70-100%
+            
+            const syntheses = [
+                "After careful consideration of all expert perspectives and cross-member discussions",
+                "Balancing EU compliance, technological feasibility, regional equity, economic sustainability, and citizen impact",
+                "Considering the robust debate between council members and their professional insights"
+            ];
 
-                <div class="recommendation">
-                    <h4>Constitutional Compliance Assessment</h4>
-                    <ul>
-                        <li>EU Alignment: ${appeal.constitutionCompliance.euAlignment ? '✅' : '❌'}</li>
-                        <li>Digital Transformation: ${appeal.constitutionCompliance.digitalTransformation ? '✅' : '❌'}</li>
-                        <li>Regional Balance: ${appeal.constitutionCompliance.regionalBalance ? '✅' : '❌'}</li>
-                        <li>Economic Competitiveness: ${appeal.constitutionCompliance.economicCompetitiveness ? '✅' : '❌'}</li>
-                        <li>Citizen Participation: ${appeal.constitutionCompliance.citizenParticipation ? '✅' : '❌'}</li>
-                        <li>Transparency: ${appeal.constitutionCompliance.transparency ? '✅' : '❌'}</li>
-                    </ul>
-                </div>
+            const rationales = {
+                "APPROVED": "The council reached consensus that this policy serves Romania's strategic interests with manageable risks.",
+                "APPROVED WITH CONDITIONS": "While promising, this policy requires specific safeguards and phased implementation to succeed.",
+                "NEEDS REVISION": "Significant concerns were raised that require further consultation and policy refinement."
+            };
 
-                <div class="recommendation">
-                    <h4>Required Actions</h4>
-                    <ul>${appeal.recommendations.map(rec => `<li>${rec}</li>`).join('')}</ul>
-                </div>
-            `;
+            return {
+                outcome,
+                confidence,
+                rationale: rationales[outcome],
+                synthesis: syntheses[Math.floor(Math.random() * syntheses.length)],
+                timestamp: new Date().toISOString()
+            };
         }
 
-        function toggleRole(containerId, roleId) {
-            const content = document.getElementById(`${containerId}_${roleId}`);
-            content.classList.toggle('expanded');
-        }
-
-        function toggleConstitution() {
-            const content = document.getElementById('constitutionContent');
-            content.classList.toggle('expanded');
-        }
-
+        // Export session data
         function exportSession() {
+            // Include transcript in session data
+            sessionData.transcript = transcriptEntries;
             const dataStr = JSON.stringify(sessionData, null, 2);
             const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
             
-            const exportFileDefaultName = `romanian_council_session_${new Date().toISOString().slice(0,10)}.json`;
+            const exportFileDefaultName = `romanian_council_${new Date().toISOString().slice(0,10)}.json`;
             
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);
@@ -1679,185 +911,8 @@
             linkElement.click();
         }
 
-        function copyDemoLink() {
-            const demoIssue = "Create national AI strategy with €500M budget and regulatory framework for public sector adoption?";
-            const url = window.location.href.split('?')[0] + '?demo=' + encodeURIComponent(demoIssue);
-            
-            navigator.clipboard.writeText(url).then(() => {
-                alert('Demo link copied to clipboard!');
-            }).catch(() => {
-                prompt('Copy this demo link:', url);
-            });
-        }
-
-        // Helper functions
-        function delay(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
-
-        function getRandomChoice(choices) {
-            return choices[Math.floor(Math.random() * choices.length)];
-        }
-
-        function getContextualInsight(role, issue) {
-            const insights = {
-                eu: [
-                    'This aligns with EU digital agenda priorities and regulatory frameworks.',
-                    'Requires careful coordination with European Commission guidelines.',
-                    'Supports Romania\'s integration milestones and competitiveness goals.'
-                ],
-                digital: [
-                    'Represents a significant leap forward in Romania\'s digital transformation.',
-                    'Could establish Romania as a regional leader in digital innovation.',
-                    'Requires robust infrastructure investment and digital skills development.'
-                ],
-                regional: [
-                    'Must ensure equitable benefits for both urban and rural communities.',
-                    'Could help bridge the development gap between regions.',
-                    'Requires careful attention to regional capacity and accessibility.'
-                ],
-                economic: [
-                    'Shows strong potential for economic growth and competitiveness.',
-                    'Requires sustainable financing and clear ROI measurement.',
-                    'Could attract foreign investment and strengthen economic position.'
-                ],
-                citizen: [
-                    'Addresses real citizen needs and democratic participation goals.',
-                    'Requires comprehensive public consultation and accessibility measures.',
-                    'Must ensure inclusive benefits for all population segments.'
-                ]
-            };
-            return getRandomChoice(insights[role]);
-        }
-
-        function generateRomanianCritique(criticRole, targetRole, issue) {
-            const critiques = {
-                eu: {
-                    digital: 'Alex, your digital focus is excellent, but we must ensure all tech solutions comply with GDPR and EU digital standards.',
-                    regional: 'Maria, while regional balance is crucial, we cannot compromise EU integration requirements for local preferences.',
-                    economic: 'Andrei, economic benefits must align with EU state aid rules and single market principles.',
-                    citizen: 'Ana, citizen input is vital, but we must balance national consultation with EU legal obligations.'
-                },
-                digital: {
-                    eu: 'Elena, EU compliance is important, but we shouldn\'t let bureaucracy slow Romania\'s digital innovation potential.',
-                    regional: 'Maria, rural development is key, but we need digital infrastructure investments to bridge the divide effectively.',
-                    economic: 'Andrei, short-term costs are necessary for long-term digital competitiveness and economic transformation.',
-                    citizen: 'Ana, citizen concerns are valid, but we must educate about digital benefits rather than avoid innovation.'
-                },
-                regional: {
-                    eu: 'Elena, EU standards matter, but one-size-fits-all approaches often disadvantage rural Romania.',
-                    digital: 'Alex, digital solutions are great for cities, but what about areas without reliable internet or tech skills?',
-                    economic: 'Andrei, economic growth centered in Bucharest continues to leave rural areas behind.',
-                    citizen: 'Ana, we need to specifically represent rural voices, not just general citizen concerns.'
-                },
-                economic: {
-                    eu: 'Elena, EU compliance costs money - we need cost-effective approaches to meet requirements.',
-                    digital: 'Alex, digital investments must show clear economic returns, not just technological advancement.',
-                    regional: 'Maria, regional development requires economic sustainability, not just social goals.',
-                    citizen: 'Ana, citizen services need stable funding - we can\'t promise what we can\'t afford.'
-                },
-                citizen: {
-                    eu: 'Elena, EU requirements matter, but Romanian citizens must understand and support these changes.',
-                    digital: 'Alex, digital transformation must include everyone, not create new forms of exclusion.',
-                    regional: 'Maria, regional balance is important, but we also need national unity and shared benefits.',
-                    economic: 'Andrei, economic growth means nothing if citizens don\'t see improvements in their daily lives.'
-                }
-            };
-            
-            return critiques[criticRole][targetRole] || `I appreciate ${roles[targetRole].name}'s perspective and see opportunities for collaboration.`;
-        }
-
-        function getRevisionInsight(role, issue) {
-            const revisions = {
-                eu: 'I maintain EU compliance as essential while seeing opportunities for innovative implementation within European frameworks.',
-                digital: 'I\'m even more convinced this digital initiative can succeed with proper infrastructure and inclusion measures.',
-                regional: 'I see potential for regional benefits if we implement thoughtful rural-first approaches and capacity building.',
-                economic: 'The economic case strengthens when we account for long-term competitiveness and European market positioning.',
-                citizen: 'Citizen support can be built through transparent communication and inclusive implementation processes.'
-            };
-            return revisions[role] || 'I maintain my position while incorporating valuable colleague insights.';
-        }
-
-        function generateCharacterBasedResponse(role, issue, context) {
-            const character = roles[role];
-            const responses = {
-                eu: [
-                    `${character.signature}. Having spent 15 years in Brussels, I can tell you that ${issue.toLowerCase().includes('eu') || issue.toLowerCase().includes('europe') ? 'this directly impacts our European positioning' : 'this needs careful EU alignment analysis'}. My experience with the Commission tells me we need ${getRandomChoice(['rigorous compliance review', 'member state coordination', 'Brussels consultation'])}.`,
-                    `As someone who led Romania's Digital Single Market implementation, I see ${getRandomChoice(['clear synergies', 'potential complications', 'alignment opportunities'])} here. ${character.signature} - and I've seen what happens when countries rush ahead without proper EU coordination.`,
-                    `From my Brussels perspective, this ${getRandomChoice(['fits well', 'needs adjustment', 'requires careful handling'])} within our EU trajectory. Speaking 6 languages helps me understand how other member states approach similar challenges - we need to learn from their experience.`
-                ],
-                digital: [
-                    `${character.signature}. As former CTO of a Romanian unicorn, I've seen how ${getRandomChoice(['digital-first solutions scale', 'infrastructure gaps kill innovation', 'AI governance becomes critical'])}. This ${issue.toLowerCase().includes('digital') || issue.toLowerCase().includes('ai') ? 'is exactly the kind of initiative Romania needs' : 'needs a strong digital component'}.`,
-                    `MIT taught me to think systematically about tech adoption. What I see here is ${getRandomChoice(['massive potential', 'significant challenges', 'calculated opportunities'])} - but only if we ${getRandomChoice(['build proper infrastructure', 'include everyone', 'scale thoughtfully'])}. We can't repeat the digital divide mistakes I've seen elsewhere.`,
-                    `Having built systems used by millions, I know that ${getRandomChoice(['scalability matters most', 'user experience determines success', 'technical debt kills projects'])}. This initiative ${getRandomChoice(['has the right foundation', 'needs architectural review', 'shows promise if implemented correctly']}.`
-                ],
-                regional: [
-                    `${character.signature}. Coming from Maramureș, I've seen how Bucharest-centered policies leave rural communities behind. This proposal ${issue.toLowerCase().includes('rural') || issue.toLowerCase().includes('regional') ? 'finally addresses rural needs' : 'could help bridge the urban-rural gap'} - but only with proper implementation.`,
-                    `My successful rural broadband initiative taught me that ${getRandomChoice(['local engagement is everything', 'one-size-fits-all fails', 'communities need ownership'])}. For this to work, we need ${getRandomChoice(['rural-first design', 'community partnerships', 'decentralized implementation'])}. Bucharest solutions don't work in Botoșani.`,
-                    `As an economist who actually lives in rural Romania, I see ${getRandomChoice(['concerning centralization risks', 'potential for equity', 'familiar exclusion patterns'])} here. We need to ensure this ${getRandomChoice(['reaches every village', 'doesn\'t widen gaps', 'serves forgotten communities']} - that's non-negotiable.`
-                ],
-                economic: [
-                    `${character.signature}. My McKinsey training and National Bank experience show me ${getRandomChoice(['the numbers add up', 'ROI concerns', 'competitive advantages'])} here. Post-2008 recovery taught me that ${getRandomChoice(['sustainable growth matters most', 'fiscal discipline is essential', 'competitiveness requires investment'])}. This ${getRandomChoice(['pays for itself', 'needs careful budgeting', 'creates strategic value']}.`,
-                    `Having architected Romania's recovery, I'm ${getRandomChoice(['cautiously optimistic', 'analytically supportive', 'strategically interested'])} about this proposal. The data suggests ${getRandomChoice(['strong fundamentals', 'manageable risks', 'significant upside'])} - but we need ${getRandomChoice(['rigorous metrics', 'phased implementation', 'performance monitoring'])} to ensure success.`,
-                    `From a competitiveness standpoint, this ${getRandomChoice(['positions Romania well', 'addresses strategic gaps', 'creates market advantages'])}. Foreign investors look for exactly this kind of ${getRandomChoice(['forward-thinking policy', 'systematic approach', 'measurable commitment']}. The economic logic is ${getRandomChoice(['compelling', 'sound', 'strategically important']}.`
-                ],
-                citizen: [
-                    `${character.signature}. My ombudsman experience showed me how policies look great on paper but fail real people. This proposal ${issue.toLowerCase().includes('citizen') || issue.toLowerCase().includes('public') ? 'prioritizes citizen needs' : 'needs stronger citizen focus'} - but accessibility and inclusion must be ${getRandomChoice(['built-in from the start', 'continuously monitored', 'community-driven']}.`,
-                    `Designing Romania's first participatory budgeting taught me that ${getRandomChoice(['transparency builds trust', 'complexity kills participation', 'inclusion requires intention'])}. For this to succeed, we need ${getRandomChoice(['clear communication', 'multiple feedback channels', 'accessible design'])} so every Romanian can understand and benefit.`,
-                    `My sociology PhD research shows that ${getRandomChoice(['vulnerable populations get excluded', 'digital divides are real', 'democratic participation requires support'])}. This initiative ${getRandomChoice(['could empower citizens', 'needs inclusion safeguards', 'should strengthen democracy']} - but only if we actively design for the most disadvantaged first.`
-                ]
-            };
-            
-            return getRandomChoice(responses[role]) || character.signature;
-        }
-
-        function generateJudgeFinalRuling() {
-            const decision = sessionData.decision;
-            const appeal = sessionData.appeal;
-            const outcome = getRandomChoice(judgeArbiter.decisionTypes);
-            
-            return {
-                outcome: outcome,
-                constitutionalAnalysis: `After comprehensive review of all deliberations, this decision ${outcome.includes('APPROVED') ? 'aligns with' : 'raises concerns regarding'} Romania's Digital Governance Constitution. The ${sessionData.config.protocol} protocol was properly followed, and expert perspectives were adequately represented.`,
-                proceduralReview: `The deliberation process maintained ${getRandomChoice(['full transparency', 'proper documentation', 'democratic participation'])} standards. All five expert voices were heard, evidence was presented, and ${getRandomChoice(['constitutional safeguards', 'procedural integrity', 'oversight mechanisms'])} remained intact throughout.`,
-                democraticCompliance: {
-                    transparency: true,
-                    representation: true,
-                    accountability: Math.random() > 0.1,
-                    dueProcess: true
-                },
-                conditions: outcome.includes('CONDITIONS') || outcome.includes('CONCERN') ? [
-                    'Quarterly constitutional compliance review required',
-                    'Enhanced citizen consultation mechanisms must be established',
-                    'Rural impact monitoring with measurable equity metrics',
-                    'EU Commission coordination before implementation',
-                    'Independent oversight committee with civil society representation'
-                ] : [],
-                finalDirective: outcome.includes('BLOCKED') ? 
-                    'This decision cannot proceed in its current form due to constitutional concerns. The Council must address identified issues and resubmit for review.' :
-                    outcome.includes('REMAND') ?
-                    'This decision is returned to the Council for additional consultation and revision based on constitutional requirements.' :
-                    `This decision is ${outcome.toLowerCase().replace(' with conditions', '')} and may proceed ${outcome.includes('CONDITIONS') ? 'subject to the mandatory conditions listed above' : 'with standard oversight mechanisms'}.`
-            };
-        }
-
-        function getDecisionRationale() {
-            return getRandomChoice([
-                'This decision balances EU integration requirements with Romanian national interests.',
-                'The analysis supports moving forward with appropriate safeguards and monitoring.',
-                'Multi-perspective deliberation reveals a path that serves Romania\'s development goals.',
-                'The expert consensus indicates manageable risks with significant strategic benefits.'
-            ]);
-        }
-
-        // Check for demo parameter on load
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const demoIssue = urlParams.get('demo');
-            if (demoIssue) {
-                document.getElementById('issueInput').value = decodeURIComponent(demoIssue);
-            }
-        });
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializeCouncil);
     </script>
 </body>
 </html>
